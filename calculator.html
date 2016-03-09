@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Caluclator</title>
+    </head>
+    <body>
+		First Number: <input type="text" name="num1" id = "num1"><br>
+		<br>
+		<input type="radio" name="sign" id = "add" value="add"> +<br>
+		<input type="radio" name="sign" id = "subtract" value="subtract"> -<br>
+		<input type="radio" name="sign" id = "multiply" value="multiply"> *<br>
+		<input type="radio" name="sign" id = "divide" value="divide"> /<br>
+		<br>
+		Second Number: <input type="text" name="num2" id = "num2"> <br>
+		<br>
+		<p id = "answer" ></p><br>
+		<script type="text/javascript">
+		
+			document.getElementById("num1").addEventListener("keyup", n1Set, false);
+			document.getElementById("num2").addEventListener("keyup", n2Set, false);
+			
+			var inputs=document.querySelectorAll("input[type=radio]");
+			for (var i = 0; i <inputs.length; i+=1) {
+				inputs[i].addEventListener("change",radioSet, false);
+			}
+			
+			var n1s = 0;
+			var n2s = 0;
+			var rs = 0;
+			
+			function n1Set() {
+				if (document.getElementById("num1").value != "") {
+                    n1s = 1;
+					allSet();
+                } else {
+					n1s = 0;
+				}
+            }
+			
+			function n2Set() {
+				if (document.getElementById("num2").value != "") {
+                    n2s = 1;
+					allSet();
+                } else {
+					n2s = 0;
+				}
+            }
+			
+			function radioSet() {
+                rs = 1;
+				allSet();
+            }
+			
+			function allSet() {
+                if (n1s == 1&& n2s == 1 && rs == 1) {
+                    calculate();
+                }
+            }
+			
+			function getCheckedRadio() {
+                for (var i = 0; i < inputs.length; i+=1) {
+					if (inputs[i].checked) {
+                        return inputs[i].value;
+                    }
+				}
+            }
+		
+            function calculate() {
+				var n1 = Number(document.getElementById("num1").value);
+				var n2 = Number(document.getElementById("num2").value);
+				var oper = getCheckedRadio();
+				
+				var ans = 0.0;
+				
+				if (oper == "add") {
+					ans = n1+n2;
+				} else if (oper == "subtract") {
+					ans = n1-n2;
+				} else if (oper == "multiply") {
+					ans = n1*n2;
+				} else if (oper == "divide") {
+					if (n2 == 0) {
+                        alert("Cannot Divide by 0! Please enter a different value");
+                    } else {
+						ans = n1/n2;
+					}
+				}
+                document.getElementById("answer").innerHTML = ("Answer = "+ans);
+			}
+			
+        </script>
+    </body>
+</html>
