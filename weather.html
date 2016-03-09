@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <link rel="stylesheet" type="text/css" href="http://classes.engineering.wustl.edu/cse330/content/weather.css">
+        <title>Weather</title>
+    </head>
+    <body>
+        <div class="weather" id="weatherWidget">
+            <div class="weather-loc" id = "loc"></div>
+            <div class="weather-humidity" id = "humidity"></div>
+            <div class="weather-temp" id = "temp"></div>
+            <img class="weather-tomorrow"  id = "tomorrow"/>
+            <img class="weather-dayaftertomorrow" id = "dayafter" />
+        </div>
+    </body>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", fetchWeather, false);
+        
+        function fetchWeather() {
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.open("GET", "http://classes.engineering.wustl.edu/cse330/content/weather_json.php", true);
+            xmlHttp.addEventListener("load", ajaxCallback, false);
+            xmlHttp.send(null);
+        }
+        
+        function ajaxCallback() {
+            var data = JSON.parse(event.target.responseText);
+            var tomorrowCode = data.tomorrow.code;
+            var dayafterCode = data.dayafter.code;
+            
+            document.getElementById("loc").innerHTML = "<Strong>"+ data.location.city+"</Strong>, "+data.location.state;;
+            document.getElementById("humidity").innerHTML = data.atmosphere.humidity;
+            document.getElementById('temp').innerHTML = data.current.temp;
+            document.getElementById('tomorrow').src = "http://us.yimg.com/i/us/nws/weather/gr/"+data.tomorrow.code+"ds.png";
+            document.getElementById('dayafter').src = "http://us.yimg.com/i/us/nws/weather/gr/"+data.dayafter.code+"ds.png";
+            
+        }
+    </script>
+   
+</html>
