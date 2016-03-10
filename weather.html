@@ -12,10 +12,13 @@
             <div class="weather-temp" id = "temp"></div>
             <img class="weather-tomorrow"  id = "tomorrow"/>
             <img class="weather-dayaftertomorrow" id = "dayafter" />
+            <br>
+            <input type="button" name = "refresh" id = "refresh" value ="Refresh">
         </div>
     </body>
     <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", fetchWeather, false);
+        document.getElementById("refresh").addEventListener("click", fetchWeather, false);
         
         function fetchWeather() {
             var xmlHttp = new XMLHttpRequest();
